@@ -4,7 +4,10 @@
     "slug": "spc-app",
     "scheme": "spc",
     "version": "1.0.0",
-    "platforms": ["ios", "android"],
+    "platforms": [
+      "ios",
+      "android"
+    ],
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "userInterfaceStyle": "automatic",
@@ -40,7 +43,10 @@
       "typedRoutes": true
     },
     "extra": {
-      "router": {}
+      "router": {},
+      "eas": {
+        "projectId": "2b224a50-034c-4424-b364-67b1c762b951"
+      }
     }
   }
 }
