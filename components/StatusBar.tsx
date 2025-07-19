@@ -9,11 +9,11 @@ export function CustomStatusBar() {
     <View>
       <View 
         style={{
-          height: insets.top,
+          // height: insets.top,
           backgroundColor: '#090015'
         }} 
         />
-      <StatusBar style="light" />
+      <StatusBar style="dark" />
     </View>
   );
 }

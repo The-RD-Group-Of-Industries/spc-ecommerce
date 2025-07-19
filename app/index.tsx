@@ -31,7 +31,7 @@ export default function Index() {
     };
 
     const backHandler = BackHandler.addEventListener(
-      'hardwareBackPress',
+      "hardwareBackPress",
       backAction
     );
 
@@ -49,24 +49,38 @@ export default function Index() {
   return (
     <View style={{ flex: 2, paddingTop: "10%", backgroundColor: "white" }}>
       {splash ? (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-         <Image source={require('@/assets/images/splashscreen.png')} style={{objectFit: 'cover', width: '100%', height: '100%'}}/>
+        <View
+          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+        >
+          <Image
+            source={require("@/assets/images/splashscreen.png")}
+            style={{ objectFit: "cover", width: "100%", height: "100%" }}
+          />
         </View>
       ) : isConnected ? (
         <WebView
           ref={webViewRef}
           source={{ uri: "https://path-ecommerce-pwtg.vercel.app" }}
-          onNavigationStateChange={(navState) => setCanGoBack(navState.canGoBack)}
+          onNavigationStateChange={(navState) =>
+            setCanGoBack(navState.canGoBack)
+          }
           onShouldStartLoadWithRequest={(request) => {
             const url = request.url;
-            if (!url.includes(baseDomain)) {
-              router.push({
-                pathname: "/custom-webview",
-                params: { url },
-              });
-              return false;
+            const host = new URL(url).host;
+
+            if (host !== "path-ecommerce-pwtg.vercel.app") {
+              // Block WebView navigation
+              setTimeout(() => {
+                router.push({
+                  pathname: "/custom-webview",
+                  params: { url },
+                });
+              }, 0);
+
+              return false; // Prevent external link load in WebView
             }
-            return true;
+
+            return true; // Allow internal navigation
           }}
         />
       ) : (
@@ -79,10 +93,12 @@ export default function Index() {
         >
           <Fontisto name="broken-link" size={45} color="black" />
           <Text style={{ marginTop: "5%", fontSize: 23 }}>
-            You're <Text style={{ color: "red" }}>not</Text> connected to the internet.
+            You're <Text style={{ color: "red" }}>not</Text> connected to the
+            internet.
           </Text>
         </View>
       )}
     </View>
   );
 }
+
