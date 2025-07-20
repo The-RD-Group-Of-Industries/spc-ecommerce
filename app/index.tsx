@@ -4,6 +4,8 @@ import * as Network from "expo-network";
 import { useEffect, useRef, useState } from "react";
 import Fontisto from "@expo/vector-icons/Fontisto";
 import { useRouter } from "expo-router";
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
 
 export default function Index() {
   const [isConnected, setIsConnected]: any = useState(null);
@@ -44,10 +46,9 @@ export default function Index() {
     }, 2000);
   }, []);
 
-  const baseDomain = "path-ecommerce-pwtg.vercel.app";
-
+  const insets = useSafeAreaInsets();
   return (
-    <View style={{ flex: 2, paddingTop: "10%", backgroundColor: "white" }}>
+    <View style={{ flex: 1, paddingTop: insets.top, paddingBottom: insets.bottom, backgroundColor: "white" }}>
       {splash ? (
         <View
           style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
@@ -58,6 +59,7 @@ export default function Index() {
           />
         </View>
       ) : isConnected ? (
+
         <WebView
           ref={webViewRef}
           source={{ uri: "https://path-ecommerce-pwtg.vercel.app" }}
